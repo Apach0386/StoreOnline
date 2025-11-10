@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path="docker-compose.yml" />
+    <File Path="Dockerfile" />
+  </Folder>
+  <Project Path="StoreOnline.API/StoreOnline.API.csproj" />
+  <Project Path="StoreOnline.Domain.DependencyInjection/StoreOnline.Domain.DependencyInjection.csproj" />
+  <Project Path="StoreOnline.Domain/StoreOnline.Domain.csproj" />
+  <Project Path="StoreOnline.Storage.DependencyInjection/StoreOnline.Storage.DependencyInjection.csproj" />
+  <Project Path="StoreOnline.Storage/StoreOnline.Storage.csproj" />
+</Solution>

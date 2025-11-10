@@ -1,0 +1,35 @@
+version: '3.9'
+
+name: "storeOnline"
+services:
+
+  postgres:
+    image: 'postgres:16.6'
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespw
+      POSTGRES_DB: store_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # storeonline.api:
+  #   build:
+  #     context: .
+  #     dockerfile: StoreOnline.API/Dockerfile
+  #   container_name: store_api
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: "Development"
+  #     ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=store_db;Username=postgres;Password=postgres"
+  #   ports:
+  #     - "5000:8080"
+
+volumes:
+  postgres_data:
+
+
