@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Domain.UseCases.ProductUseCases.Abstract;
 using Domain.UseCases.ProductUseCases.Models;
 using Microsoft.EntityFrameworkCore;
+using Storage;
 using Storage.Entities;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Create;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Delete;
@@ -10,7 +11,7 @@ using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Update;
 using StoreOnline.Domain.UseCases.ProductUseCases.Queries.GetAll;
 using StoreOnline.Domain.UseCases.ProductUseCases.Queries.GetById;
 
-namespace Storage.Sorages.Products;
+namespace StoreOnline.Storage.Storages;
 
 public class ProductStorage : IProductStorage
 {
@@ -33,7 +34,8 @@ public class ProductStorage : IProductStorage
 
         var res = await _dbContext.Products
             .AsNoTracking()
-            .FirstAsync(x => x.Id == entity.Id, cancellationToken);
+            .FirstAsync(x => x.Id == entity.Id, cancellationToken);       
+
 
         return _mapper.Map<ProductModel>(res);
 
@@ -41,7 +43,7 @@ public class ProductStorage : IProductStorage
 
     public async Task<ProductModel> GetById(GetProductQuery query, CancellationToken cancellationToken)
     {
-        var product = _dbContext.Products
+        var product = await _dbContext.Products
            .AsNoTracking()
            .FirstAsync(x => x.Id == query.Id);
 
@@ -61,14 +63,14 @@ public class ProductStorage : IProductStorage
     public async Task<ProductModel> Update(UpdateProductCommand command, CancellationToken cancellationToken)
     {
         var product = await _dbContext.Products
-            .AsNoTracking()
+            //.AsNoTracking()
             .FirstAsync(x => x.Id == command.Id);
 
         product.Name = command.Name;
         product.Description = command.Description;
         product.Price = command.Price;
 
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         return _mapper.Map<ProductModel>(product);
     }
@@ -81,7 +83,7 @@ public class ProductStorage : IProductStorage
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-    }    
+    }
 
     public Task<bool> IsExist(Guid entityId, CancellationToken cancellationToken)
     {
@@ -89,4 +91,14 @@ public class ProductStorage : IProductStorage
             .AnyAsync(x => x.Id == entityId);
     }
 
+    public async Task Create(IEnumerable<CreateProductCommand> commands, CancellationToken cancellationToken)
+    {
+
+        var products = commands.Select(x => _mapper.Map<Product>(x));
+
+        await _dbContext.Products.AddRangeAsync(products, cancellationToken);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+    }
 }

@@ -4,6 +4,7 @@ using Domain.UseCases.ProductUseCases.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Create;
+using StoreOnline.Domain.UseCases.ProductUseCases.Commands.CreateFromFile;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Delete;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Update;
 using StoreOnline.Domain.UseCases.ProductUseCases.Queries.GetAll;
@@ -34,6 +35,19 @@ namespace API.StoreOnline.Controllers
 
         }
 
+        [HttpPost("CreateFromFile")]
+        public async Task<ActionResult> CreateFromFile(IFormFile formFile, CancellationToken cancellationToken)
+        {
+            using var stream = formFile.OpenReadStream();                      
+
+            CreateFromFileProductCommand command = new CreateFromFileProductCommand {File = stream, FileName = formFile.FileName };
+
+            await _mediator.Send(command, cancellationToken);
+
+            return Ok();
+
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult> Update([FromQuery] Guid id, [FromBody] UpdateProductDto productDto, CancellationToken cancellationToken)
         {
@@ -61,7 +75,7 @@ namespace API.StoreOnline.Controllers
         {
             List<ProductModel> models = await _mediator.Send(query, cancellationToken);
 
-            var productDtos = _mapper.Map<List<ProductDto>>(models);
+            var productDtos = models.Select(_mapper.Map<ProductDto>);
 
             return Ok(productDtos);
         }

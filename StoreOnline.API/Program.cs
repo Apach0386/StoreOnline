@@ -1,4 +1,5 @@
 using Domain.Dependency.Injection;
+using Microsoft.EntityFrameworkCore;
 using Storage;
 using Storage.Dependency.Injection;
 
@@ -15,4 +16,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapControllers();
-app.Run();
+using (var scope = app.Services.CreateScope()) 
+{
+    await scope.ServiceProvider.GetRequiredService<StoreDbContext>().Database.MigrateAsync();
+}
+    app.Run();

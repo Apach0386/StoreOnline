@@ -16,9 +16,9 @@ namespace API.StoreOnline.Mappers
            
             CreateMap<CreateProductDto, CreateProductCommand>();
 
-            CreateMap<UpdateProductDto, UpdateProductDto>();
+            CreateMap<UpdateProductDto, UpdateProductCommand>();
 
-            CreateMap<List<ProductModel>, List<ProductDto>>();
+            //CreateMap<List<ProductModel>, List<ProductDto>>();
             
 
         }
