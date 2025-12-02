@@ -16,6 +16,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  jaeger:    
+    image: jaegertracing/all-in-one:1.41
+    container_name: jaeger
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+
+
+
+
+
   # storeonline.api:
   #   build:
   #     context: .

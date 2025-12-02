@@ -13,16 +13,10 @@ namespace StoreOnline.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoryController : ControllerBase
+    public class CategoryController : APIControllerBase
     {
-        private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
-
-        public CategoryController(IMediator mediator, IMapper mapper)
-        {
-            _mediator = mediator;
-            _mapper = mapper;
-        }
+        public CategoryController(IMediator mediator, IMapper mapper) : base(mediator, mapper) { }
+               
 
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] CreateCategoryDto dto, CancellationToken cancellationToken)
@@ -64,7 +58,7 @@ namespace StoreOnline.API.Controllers
         {
             var command = new DeleteCategoryCommand { Id = id };
 
-            await _mediator.Send(command, cancellationToken);
+            await _mediator.Send(command, cancellationToken);            
 
             return NoContent();
         }

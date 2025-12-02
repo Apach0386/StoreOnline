@@ -2,6 +2,7 @@ using Domain.Dependency.Injection;
 using Microsoft.EntityFrameworkCore;
 using Storage;
 using Storage.Dependency.Injection;
+using StoreOnline.API.Monitoring;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDomain();
 builder.Services.AddAutoMapper(config => config.AddMaps(typeof(Program).Assembly));
 builder.Services.AddStorage(builder.Configuration);
+builder.Services.AddOpenTelemetryMonitoring(builder.Configuration);
 
 var app = builder.Build();
 app.UseSwagger();
