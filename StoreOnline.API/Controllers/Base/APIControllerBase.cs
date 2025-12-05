@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace StoreOnline.API.Controllers
+namespace StoreOnline.API.Controllers.Base
 {
     public abstract class APIControllerBase : ControllerBase
     {

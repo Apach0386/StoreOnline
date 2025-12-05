@@ -5,9 +5,9 @@ using StoreOnline.Domain.UseCases.CategoryUseCases.Models;
 
 namespace StoreOnline.API.Mappers
 {
-    public class CategoruProfile : Profile
+    public class CategoryProfile : Profile
     {
-        public CategoruProfile()
+        public CategoryProfile()
         {
             CreateMap<CreateCategoryDto, CreateCategoryCommand>();
             CreateMap<CategoryDto, CategoryModel>();

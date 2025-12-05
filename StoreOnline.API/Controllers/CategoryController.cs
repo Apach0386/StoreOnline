@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StoreOnline.API.Controllers.Base;
 using StoreOnline.API.DTOs.Categories;
 using StoreOnline.Domain.UseCases.CategoryUseCases.Commands.Create;
 using StoreOnline.Domain.UseCases.CategoryUseCases.Commands.Delete;

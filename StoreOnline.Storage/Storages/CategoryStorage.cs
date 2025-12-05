@@ -24,6 +24,7 @@ public class CategoryStorage : ICategoryStorage
         _dbContext = dbContext;
         _mapper = mapper;
     }
+
     public async Task<CategoryModel> Create(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Category>(command);
@@ -38,6 +39,7 @@ public class CategoryStorage : ICategoryStorage
         return _mapper.Map<CategoryModel>(res);
 
     }
+
     public async Task<CategoryModel> Update(UpdateCategoryCommand command, CancellationToken cancellationToken)
     {
         var category = await _dbContext.Categories
@@ -49,6 +51,7 @@ public class CategoryStorage : ICategoryStorage
 
         return _mapper.Map<CategoryModel>(category);
     }
+
     public async Task<CategoryModel> GetById(GetCategoryQuery query, CancellationToken cancellationToken)
     {
         var category = await _dbContext.Categories
@@ -57,6 +60,7 @@ public class CategoryStorage : ICategoryStorage
 
         return _mapper.Map<CategoryModel>(category);
     }
+
     public async Task<List<CategoryModel>> GetAll(GetAllCategoryQueries queries, CancellationToken cancellationToken)
     {
         return await _dbContext.Categories
@@ -66,12 +70,6 @@ public class CategoryStorage : ICategoryStorage
     }
 
 
-
-    public Task<bool> IsExist(Guid entityId, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task Delete(DeleteCategoryCommand command, CancellationToken cancellationToken)
     {
        Category category = await _dbContext.Categories.FirstAsync(c => c.Id == command.Id);
@@ -80,4 +78,11 @@ public class CategoryStorage : ICategoryStorage
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+
+    public Task<bool> IsExist(Guid entityId, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
 }
