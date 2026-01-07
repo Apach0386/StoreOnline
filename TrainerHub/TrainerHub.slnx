@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/SolutionItem/">
+    <File Path="docker-compose.yml" />
+    <File Path="DockerFile" />
+  </Folder>
+  <Project Path="TrainerHub.API/TrainerHub.API.csproj" />
+  <Project Path="TrainerHub.Domain.Dependency.Injection/TrainerHub.Domain.Dependency.Injection.csproj" />
+  <Project Path="TrainerHub.Domain/TrainerHub.Domain.csproj" />
+  <Project Path="TrainerHub.Storage.Dependency.Injection/TrainerHub.Storage.Dependency.Injection.csproj" />
+  <Project Path="TrainerHub.Storage/TrainerHub.Storage.csproj" />
+</Solution>

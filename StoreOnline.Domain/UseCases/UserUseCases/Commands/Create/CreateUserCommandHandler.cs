@@ -1,19 +1,23 @@
 ﻿using MediatR;
 using StoreOnline.Domain.UseCases.UserUseCases.Abstract;
-using StoreOnline.Domain.UseCases.UserUseCases.Models;
 
 namespace StoreOnline.Domain.UseCases.UserUseCases.Commands.Create;
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserModel>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 {
     private readonly IUserStorage _storage;
+    private readonly IRoleStorage _roleStorage;
 
-    public CreateUserCommandHandler(IUserStorage storage)
+    public CreateUserCommandHandler(IUserStorage storage, IRoleStorage roleStorage)
     {
         _storage = storage;
+        _roleStorage = roleStorage;
     }
-    public Task<UserModel> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
-        return _storage.Create(command, cancellationToken);
+        var user = await _storage.Create(command, cancellationToken);
+
+        await _roleStorage.AssigneRole(user.Id, "User", cancellationToken);
+
     }
 }

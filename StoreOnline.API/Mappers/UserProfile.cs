@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using StoreOnline.API.DTOs.Users;
-using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Create;
+using StoreOnline.Domain.UseCases.UserUseCases.Commands.Create;
 
 namespace StoreOnline.API.Mappers
 {
@@ -8,8 +8,8 @@ namespace StoreOnline.API.Mappers
     {
         public UserProfile()
         {
-            CreateMap<CreateUserDto, CreateProductCommand>();
-            CreateMap<CreateProductCommand, CreateUserDto>();
+            CreateMap<CreateUserDto, CreateUserCommand>();
+            CreateMap<CreateUserCommand, CreateUserDto>();
         }
     }
 }

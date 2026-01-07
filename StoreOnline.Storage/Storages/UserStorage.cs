@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Storage;
 using StoreOnline.Domain.UseCases.UserUseCases.Abstract;
@@ -12,26 +13,27 @@ public class UserStorage : IUserStorage
 {
     private readonly StoreDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly UserManager<User> _userManager;
 
-    public UserStorage(StoreDbContext dbContext, IMapper mapper)
+    public UserStorage(StoreDbContext dbContext, IMapper mapper, UserManager<User> userManager)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _userManager = userManager;
     }
     public async Task<UserModel> Create(CreateUserCommand command, CancellationToken cancellationToken)
     {
         User entity = _mapper.Map<User>(command);
 
-        await _dbContext.Users.AddAsync(entity, cancellationToken);
+        entity.UserName = command.Email;       
 
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        var result = await _userManager.CreateAsync(entity, command.Password);
 
-        var res = await _dbContext.Users
-            .AsNoTracking()
-            .FirstAsync(x => x.Id == entity.Id, cancellationToken);
-        
-        return _mapper.Map<UserModel>(res);
+        if (!result.Succeeded)
+        {
+            throw new Exception(string.Join("; ", result.Errors.Select(e => e.Description)));
+        }
 
-
+        return _mapper.Map<UserModel>(entity);
     }
 }

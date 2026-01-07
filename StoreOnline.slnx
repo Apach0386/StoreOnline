@@ -2,6 +2,7 @@
   <Folder Name="/SolutionItems/">
     <File Path="docker-compose.yml" />
     <File Path="Dockerfile" />
+    <File Path="prometheus.yml" />
   </Folder>
   <Project Path="StoreOnline.API/StoreOnline.API.csproj" />
   <Project Path="StoreOnline.Domain.DependencyInjection/StoreOnline.Domain.DependencyInjection.csproj" />

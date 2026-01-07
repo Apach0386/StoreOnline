@@ -18,9 +18,9 @@ namespace StoreOnline.API.Controllers
         {
             var command = _mapper.Map<CreateUserCommand>(dto);
 
-            var res = _mediator.Send(command, cancellationToken);
+             await _mediator.Send(command, cancellationToken);
 
-            return Ok(res);
+            return Ok();
         }
         
     }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using StoreOnline.Domain.UseCases.UserUseCases.Commands.Create;
 using StoreOnline.Domain.UseCases.UserUseCases.Models;
 using StoreOnline.Storage.Entities;
 
@@ -10,5 +11,7 @@ public class UserProfile : Profile
     {
         CreateMap<UserModel, User>();
         CreateMap<User, UserModel>();
+
+        CreateMap<CreateUserCommand, User>();
     }
 }

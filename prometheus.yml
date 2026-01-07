@@ -1,0 +1,16 @@
+global:
+  
+scrape_configs:
+  - job_name: "storeOnline_scrape"
+    scrape_interval: 10s
+    scrape_timeout: 3s
+    static_configs:
+      - targets: 
+        - host.docker.internal:5267    
+        labels: 
+          app: storeOnline_local 
+      - targets: 
+        - api:5000    
+        labels: 
+          app: storeOnline_docker  
+    

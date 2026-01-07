@@ -16,8 +16,8 @@ builder.Services.AddOpenTelemetryMonitoring(builder.Configuration);
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
-
 app.MapControllers();
+app.MapPrometheusScrapingEndpoint();
 using (var scope = app.Services.CreateScope()) 
 {
     await scope.ServiceProvider.GetRequiredService<StoreDbContext>().Database.MigrateAsync();
