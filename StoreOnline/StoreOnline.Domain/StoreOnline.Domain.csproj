@@ -17,4 +17,8 @@
     <Folder Include="UseCases\UserUseCases\Queries\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\StoreOnline.Contracts\StoreOnline.Contracts.csproj" />
+  </ItemGroup>  
+
 </Project>

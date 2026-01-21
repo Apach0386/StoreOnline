@@ -18,4 +18,5 @@
     <Project Path="StoreOnline/StoreOnline.Storage.DependencyInjection/StoreOnline.Storage.DependencyInjection.csproj" />
     <Project Path="StoreOnline/StoreOnline.Storage/StoreOnline.Storage.csproj" />
   </Folder>
+  <Project Path="StoreOnline.Contracts/StoreOnline.Contracts.csproj" Id="0933cd31-7c05-4251-bee9-f4e4c5656029" />
 </Solution>

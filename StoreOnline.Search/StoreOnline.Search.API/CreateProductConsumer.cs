@@ -1,4 +1,8 @@
 ﻿using Confluent.Kafka;
+using MediatR;
+using StoreOnline.Contracts;
+using StoreOnline.Search.Domain.UseCases.Commands.Index;
+using System.Diagnostics;
 
 namespace StoreOnline.Search.API
 {
@@ -7,12 +11,16 @@ namespace StoreOnline.Search.API
         private readonly IConsumer<Null, string> _consumer;
         private readonly ILogger<CreateProductConsumer> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IServiceScopeFactory _factory;
 
-        public CreateProductConsumer(IConsumer<Null, string> consumer, ILogger<CreateProductConsumer> logger, IConfiguration configuration)
+        private static readonly ActivitySource _activitySource = new ActivitySource("StoreOnline.Search.API.CreateProductConsumer");
+        public CreateProductConsumer(IConsumer<Null, string> consumer, ILogger<CreateProductConsumer> logger, IConfiguration configuration, IServiceScopeFactory factory)
         {
             _consumer = consumer;
             _logger = logger;
             _configuration = configuration;
+            _factory = factory;
+
         }
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -23,8 +31,18 @@ namespace StoreOnline.Search.API
                 try
                 {
                     var consumeResult = _consumer.Consume(stoppingToken);
+
+                    using var scope = _factory.CreateScope();
+                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+                    var command = System.Text.Json.JsonSerializer.Deserialize<CreateProductMessage>(consumeResult.Message.Value!);
+
+                    using var activity = _activitySource.StartActivity("Consume CreateProductMessage", ActivityKind.Consumer, ActivityContext.TryParse(command.ActivityId, null, out var context)? context:default);
+
+                    await mediator.Send(command!, stoppingToken);
+
                     _logger.LogInformation($"Consumed message '{consumeResult.Message.Value}' at: '{consumeResult.TopicPartitionOffset}'.");
-                   _consumer.Commit(consumeResult);
+                    _consumer.Commit(consumeResult);
                 }
                 catch (ConsumeException ex)
                 {

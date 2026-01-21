@@ -2,6 +2,7 @@
 using Domain.UseCases.ProductUseCases.Abstract;
 using Domain.UseCases.ProductUseCases.Models;
 using MediatR;
+using StoreOnline.Contracts;
 
 namespace StoreOnline.Domain.UseCases.ProductUseCases.Commands.Create;
 
@@ -24,7 +25,9 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         {
             Id = productModel.Id,
             Name = request.Name!,
-            Description = request.Description
+            Description = request.Description,
+            ActivityId = System.Diagnostics.Activity.Current?.Id
+
         };
 
         var jSon = System.Text.Json.JsonSerializer.Serialize(productMessage);

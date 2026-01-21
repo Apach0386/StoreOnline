@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using StoreOnline.Search.Domain.Pipelines;
 using StoreOnline.Search.Domain.UseCases.Commands.Index;
 namespace StoreOnline.Search.Domain.DependencyInjection;
 
@@ -6,7 +7,8 @@ public static class ServiceCollectionExensions
 {
     public static IServiceCollection AddDomain(this IServiceCollection services)
     {
-        services.AddMediatR(config => config        
+        services.AddMediatR(config => config
+        .AddOpenBehavior(typeof(MonitoringPipeline<,>))
         .RegisterServicesFromAssembly(typeof(IndexCommand).Assembly));       
 
         return services;
