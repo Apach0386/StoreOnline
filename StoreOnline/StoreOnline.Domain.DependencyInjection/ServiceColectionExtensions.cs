@@ -21,7 +21,8 @@ public static class ServiceColectionExtensions
         {
             var config = new ProducerConfig
             {
-                BootstrapServers = configuration.GetConnectionString("kafka")
+                BootstrapServers = configuration.GetConnectionString("kafka"),
+                  ClientId = "product"
             };
             return new ProducerBuilder<Null, string>(config).Build();
         });
