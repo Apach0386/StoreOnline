@@ -1,0 +1,24 @@
+syntax = "proto3";
+option csharp_namespace = "StoreOnline.Search.Api.grpc";
+import "google/protobuf/empty.proto";
+service SearchEngine{
+	rpc Index (IndexRequest) returns (google.protobuf.Empty);
+	rpc Search (SearchRequest) returns (SearchResponse);
+}
+message IndexRequest {
+	string id = 1;
+	string name = 2;
+	string description = 3;
+}
+message SearchRequest {
+	string query = 1;
+}
+message SearchResponse {
+	repeated Product products = 1;
+
+	message Product {
+		string id = 1;
+		string name = 2;
+		string description = 3;
+	}
+}

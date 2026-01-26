@@ -9,6 +9,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.0.0" />
     <PackageReference Include="Confluent.Kafka" Version="2.13.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.76.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.76.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="10.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="10.1.0" />
     <PackageReference Include="OpenTelemetry" Version="1.14.0" />
@@ -27,6 +33,10 @@
     <ProjectReference Include="..\..\StoreOnline.Contracts\StoreOnline.Contracts.csproj" />
     <ProjectReference Include="..\StoreOnline.Domain.DependencyInjection\StoreOnline.Search.Domain.DependencyInjection.csproj" />
     <ProjectReference Include="..\StoreOnline.Search.Storage.DependencyInjection\StoreOnline.Search.Storage.DependencyInjection.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Protobuf Include="..\..\StoreOnline.Contracts\product.proto" GrpcServices="Server"/>
   </ItemGroup>
 
 </Project>

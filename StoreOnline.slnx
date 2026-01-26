@@ -7,6 +7,7 @@
   <Folder Name="/StoreOnline.Search/">
     <Project Path="StoreOnline.Search/StoreOnline.Domain.DependencyInjection/StoreOnline.Search.Domain.DependencyInjection.csproj" Id="61eb4899-b0f3-4ebc-a85d-c124fd378944" />
     <Project Path="StoreOnline.Search/StoreOnline.Search.API/StoreOnline.Search.API.csproj" Id="102b0aed-826e-4eb0-af31-1e85c81a9813" />
+    <Project Path="StoreOnline.Search/StoreOnline.Search.Consumer/StoreOnline.Search.Consumer.csproj" Id="26a41c1a-2376-461f-b340-4c2f4074cfca" />
     <Project Path="StoreOnline.Search/StoreOnline.Search.Domain/StoreOnline.Search.Domain.csproj" Id="498f110d-4daa-4ab2-8d58-78f2144e8da5" />
     <Project Path="StoreOnline.Search/StoreOnline.Search.Storage.DependencyInjection/StoreOnline.Search.Storage.DependencyInjection.csproj" Id="290a092a-90fb-4717-8443-cc7b148898d7" />
     <Project Path="StoreOnline.Search/StoreOnline.Search.Storage/StoreOnline.Search.Storage.csproj" Id="ce3390ca-96f0-453d-a015-da6f4f543c4b" />

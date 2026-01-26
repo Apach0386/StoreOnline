@@ -88,7 +88,7 @@ public class ProductStorage : IProductStorage
     public Task<bool> IsExist(Guid entityId, CancellationToken cancellationToken)
     {
         return _dbContext.Products
-            .AnyAsync(x => x.Id == entityId);
+            .AnyAsync(x => x.Id == entityId,cancellationToken);
     }
 
     public async Task Create(IEnumerable<CreateProductCommand> commands, CancellationToken cancellationToken)
