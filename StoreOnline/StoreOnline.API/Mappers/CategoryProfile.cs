@@ -11,6 +11,7 @@ namespace StoreOnline.API.Mappers
         {
             CreateMap<CreateCategoryDto, CreateCategoryCommand>();
             CreateMap<CategoryDto, CategoryModel>();
+            CreateMap<CategoryModel, CategoryDto>();
 
         }
     }

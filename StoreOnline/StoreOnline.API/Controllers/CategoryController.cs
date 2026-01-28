@@ -22,12 +22,12 @@ namespace StoreOnline.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] CreateCategoryDto dto, CancellationToken cancellationToken)
         {
-            var command = _mapper.Map<CreateCategoryCommand>(dto);
+            var command =  _mapper.Map<CreateCategoryCommand>(dto);
             var result = await _mediator.Send(command, cancellationToken);
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<ActionResult> Update([FromBody] UpdateCategoryDto dto, CancellationToken cancellationToken)
         {
             var command = _mapper.Map<UpdateCategoryCommand>(dto);
@@ -35,8 +35,8 @@ namespace StoreOnline.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getById/{id}")]
-        public async Task<ActionResult> GetById([FromQuery] Guid id, CancellationToken cancellationToken)
+        [HttpGet("getById/{id:guid:required}")]
+        public async Task<ActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var query = new GetCategoryQuery { Id = id };
             CategoryModel model = await _mediator.Send(query, cancellationToken);

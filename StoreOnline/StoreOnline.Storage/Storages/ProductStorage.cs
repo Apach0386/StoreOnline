@@ -10,6 +10,7 @@ using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Delete;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Update;
 using StoreOnline.Domain.UseCases.ProductUseCases.Queries.GetAll;
 using StoreOnline.Domain.UseCases.ProductUseCases.Queries.GetById;
+using StoreOnline.Storage.Entities;
 
 namespace StoreOnline.Storage.Storages;
 
@@ -34,7 +35,7 @@ public class ProductStorage : IProductStorage
 
         var res = await _dbContext.Products
             .AsNoTracking()
-            .FirstAsync(x => x.Id == entity.Id, cancellationToken);       
+            .FirstAsync(x => x.Id == entity.Id, cancellationToken);
 
 
         return _mapper.Map<ProductModel>(res);
@@ -85,10 +86,10 @@ public class ProductStorage : IProductStorage
 
     }
 
-    public Task<bool> IsExist(Guid entityId, CancellationToken cancellationToken)
+    public Task<bool> IsExists (Guid entityId, CancellationToken cancellationToken)
     {
         return _dbContext.Products
-            .AnyAsync(x => x.Id == entityId,cancellationToken);
+            .AnyAsync(x => x.Id == entityId, cancellationToken);
     }
 
     public async Task Create(IEnumerable<CreateProductCommand> commands, CancellationToken cancellationToken)
@@ -101,4 +102,23 @@ public class ProductStorage : IProductStorage
         await _dbContext.SaveChangesAsync(cancellationToken);
 
     }
+
+    public async Task BindCategoryToProduct(Guid productId, Guid categoryId, CancellationToken cancellationToken)
+    {
+        await _dbContext.ProductCategories.AddAsync(new ProductCategory
+        {
+            ProductId = productId,
+            CategoryId = categoryId
+        }, cancellationToken);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+    }
+
+    public async Task<bool> IsBindExists(Guid productId, Guid categoryId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.ProductCategories
+            .AnyAsync(x => x.ProductId == productId && x.CategoryId == categoryId, cancellationToken);
+    }
+
 }

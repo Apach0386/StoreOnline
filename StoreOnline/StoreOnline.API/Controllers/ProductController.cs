@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.UseCases.ProductUseCases.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Bind;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Create;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.CreateFromFile;
 using StoreOnline.Domain.UseCases.ProductUseCases.Commands.Delete;
@@ -85,6 +86,19 @@ namespace API.StoreOnline.Controllers
         { 
             DeleteProductCommand command = new DeleteProductCommand { Id = id};
             await _mediator.Send(command, cancellationToken);
+            return Ok();
+        }
+
+        [HttpPut("bind/{productId:guid}/to/{categoryId:guid}")]
+        public async Task<ActionResult> BindCategoriesToProduct([FromRoute] Guid productId,[FromRoute] Guid categoryId, CancellationToken cancellationToken)
+        {
+            var command = new BindCategoryToProductCommand
+            {
+                ProductId = productId,
+                CategoryId = categoryId
+            };
+            await _mediator.Send(command, cancellationToken);
+
             return Ok();
         }
     }

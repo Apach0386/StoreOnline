@@ -32,7 +32,7 @@ public class CategoryStorage : ICategoryStorage
         await _dbContext.Categories.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        var res = _dbContext.Categories
+        var res = await _dbContext.Categories
             .AsNoTracking()
             .FirstAsync(x => x.Id == entity.Id, cancellationToken);
 
@@ -79,10 +79,9 @@ public class CategoryStorage : ICategoryStorage
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-
-    public Task<bool> IsExist(Guid entityId, CancellationToken cancellationToken)
+    public Task<bool> IsExists(Guid entityId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-    }
-
+        return _dbContext.Categories
+            .AnyAsync(x => x.Id == entityId, cancellationToken);
+    }   
 }

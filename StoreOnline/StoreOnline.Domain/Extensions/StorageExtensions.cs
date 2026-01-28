@@ -7,7 +7,7 @@ public static class StorageExtensions
 {
     public static async Task ThrowIfProductNotFound(this IProductStorage storage, Guid id, CancellationToken cancellationToken)
     {
-        if (!await storage.IsExist(id, cancellationToken))
+        if (!await storage.IsExists(id, cancellationToken))
         {
             throw new ProductNotFoundException(id);
         }

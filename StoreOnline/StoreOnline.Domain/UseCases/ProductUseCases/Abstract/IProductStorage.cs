@@ -16,4 +16,6 @@ public interface IProductStorage : IStorage
     Task<ProductModel> Update(UpdateProductCommand command, CancellationToken cancellationToken);
     Task Delete(DeleteProductCommand command, CancellationToken cancellationToken);
     Task Create(IEnumerable<CreateProductCommand> commands, CancellationToken cancellationToken);
+    Task BindCategoryToProduct (Guid productId, Guid categoryId, CancellationToken cancellationToken);
+    Task<bool> IsBindExists(Guid productId, Guid categoryId, CancellationToken cancellationToken);
 }

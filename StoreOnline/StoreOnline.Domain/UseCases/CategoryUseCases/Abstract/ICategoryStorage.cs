@@ -16,5 +16,5 @@ public interface ICategoryStorage : IStorage
     Task<CategoryModel> Update(UpdateCategoryCommand command, CancellationToken cancellationToken);
     Task<CategoryModel> GetById(GetCategoryQuery query, CancellationToken cancellationToken);
     Task<List<CategoryModel>> GetAll(GetAllCategoryQueries queries, CancellationToken cancellationToken);
-    Task Delete (DeleteCategoryCommand command, CancellationToken cancellationToken);
+    Task Delete (DeleteCategoryCommand command, CancellationToken cancellationToken);    
 }

@@ -18,13 +18,16 @@ builder.Services.AddSingleton<IConsumer<Null, string>>(sp => new ConsumerBuilder
     EnableAutoCommit = builder.Configuration.GetValue<bool>("kafka:enableAutoCommit")    
 }).Build());
 
-builder.Services.AddHostedService<CreateProductConsumer>();
+//builder.Services.AddHostedService<CreateProductConsumer>();
+builder.Services.AddGrpcReflection().AddGrpc();
 
 
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+app.MapGrpcService<StoreOnline.Search.API.Controllers.SearchEngineGrpcService>();
+app.MapGrpcReflectionService();
 
 
 app.Run();
