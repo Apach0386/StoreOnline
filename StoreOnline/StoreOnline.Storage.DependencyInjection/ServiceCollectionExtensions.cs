@@ -16,12 +16,21 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddStorage(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContextPool<StoreDbContext>(opt => opt.UseNpgsql(configuration.GetConnectionString("postgres"), b => b.MigrationsAssembly(typeof(StoreDbContext).Assembly)));
-        services.AddIdentityCore<User>().AddRoles<Role>().AddUserManager<UserManager<User>>().AddEntityFrameworkStores<StoreDbContext>();
+        services.AddIdentityCore<User>(opt => 
+        {
+            opt.Lockout.AllowedForNewUsers = true;
+            opt.Lockout.MaxFailedAccessAttempts = 5;
+            opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+        })
+            .AddRoles<Role>()
+            .AddUserManager<UserManager<User>>()
+            .AddEntityFrameworkStores<StoreDbContext>();
         services.AddAutoMapper(config => config.AddMaps(typeof(StoreDbContext).Assembly));
 
         services.AddScoped<IProductStorage, ProductStorage>();
         services.AddScoped<ICategoryStorage, CategoryStorage>();
         services.AddScoped<ITransactionStorage, TransactionStorage>();
+        services.AddScoped<ILoginUserStorage, LoginUserStorage>();
         services.AddScoped<IUserStorage, UserStorage>();
         services.AddScoped<IRoleStorage, RoleStorage>();
 

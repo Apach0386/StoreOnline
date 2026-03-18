@@ -26,6 +26,7 @@ public class UserStorage : IUserStorage
         User entity = _mapper.Map<User>(command);
 
         entity.UserName = command.Email;       
+        entity.LockoutEnabled = true;
 
         var result = await _userManager.CreateAsync(entity, command.Password);
 

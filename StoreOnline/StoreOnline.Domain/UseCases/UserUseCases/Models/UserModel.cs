@@ -15,5 +15,5 @@ public class UserModel
     public required string Email { get; set; }    
     public required string PhoneNumber { get; set; }
 
-    //public List<UserRole>? UserRoles { get; set; }
+    public List<string> Roles { get; set; } = [];
 }

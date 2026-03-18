@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StoreOnline.API.Controllers.Base;
 using StoreOnline.API.DTOs.Users;
 using StoreOnline.Domain.UseCases.UserUseCases.Commands.Create;
+using StoreOnline.Domain.UseCases.UserUseCases.Commands.Login;
 
 namespace StoreOnline.API.Controllers
 {
@@ -18,10 +19,17 @@ namespace StoreOnline.API.Controllers
         {
             var command = _mapper.Map<CreateUserCommand>(dto);
 
-             await _mediator.Send(command, cancellationToken);
+            await _mediator.Send(command, cancellationToken);
 
             return Ok();
         }
-        
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] LoginUserDto dto, CancellationToken cancellationToken)
+        {
+            var command = _mapper.Map<LoginUserCommand>(dto);
+            var token = await _mediator.Send(command, cancellationToken);
+            return Ok(token);
+        }
     }
 }
